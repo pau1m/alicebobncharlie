@@ -1,3 +1,6 @@
+//@todo smart contract
+//@todo dApp
+//@todo Messaging or embedding data in transaction
 
 #local chain and watcher
 brew tap ethereum/ethereum

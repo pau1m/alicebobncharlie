@@ -1,6 +1,16 @@
-const Web3 = require('web3')
-const _ = require('underscore')
+const Web3 = require('web3') // docs @ https://github.com/ethereum/wiki/wiki/JavaScript-API
+const _ = require('underscore') // docs @ http://underscorejs.org/
 
+/*
+  stuff for development
+  so we can do stuff with transactions without actually doing stuff with transactions.
+  var TestRPC = require("ethereumjs-testrpc");
+  web3.setProvider(TestRPC.provider());
+*/
+
+// may need to use npm install -g ethereumjs-testrpc
+// in dev https://github.com/ethereumjs/testrpc
+// npm install -g truffle creating contracts.
 // Point Web3 object to our Ethereum Geth RPC
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
 
@@ -20,7 +30,7 @@ let accounts = {
 }
 
 // ensure all our hashes are lower case.
-_.mapObject( accounts, function(val, key) {
+_.mapObject(accounts, function(val, key) {
   accounts[key] = val.toLowerCase()
 })
 

@@ -38,6 +38,7 @@ let filterSpecificAddresses = web3.eth.filter({
   to: accounts.alice,
 })
 
+// Fetch and display info from transactions sent to Alice's wallet.
 filterSpecificAddresses.get(function(error, result) {
   if (!error) {
     result.forEach(function(item, index) {

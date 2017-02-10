@@ -1,0 +1,56 @@
+{
+  "contract_name": "MyContract",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "deposit",
+      "outputs": [],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "payable": false,
+      "type": "fallback"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "accountAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "LogDepositMade",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b60008054600160a060020a03191633600160a060020a03161790555b5b610129806100366000396000f30060606040523615602d5763ffffffff60e060020a6000350416638da5cb5b8114603c578063d0e30db0146062575b34600057603a5b6000565b565b005b346000576046606a565b60408051600160a060020a039092168252519081900360200190f35b603a6079565b005b600054600160a060020a031681565b600034111560385760008054604051600160a060020a03909116913480156108fc02929091818181858888f19350505050151560b3576000565b60005460408051600160a060020a03909216825234602083015280517fa8126f7572bb1fdeae5b5aa9ec126438b91f658a07873f009d041ae690f3a1939281900390910190a15b5b5600a165627a7a72305820e0399d1db7d691a4c92a27532424ede682e83e6bbe5fef7405bb7c7da3c7e9d30029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1486652894271
+}

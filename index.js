@@ -6,7 +6,10 @@ const _ = require('underscore') // docs @ http://underscorejs.org/
   so we can do stuff with transactions without actually doing stuff with transactions.
   var TestRPC = require("ethereumjs-testrpc");
   web3.setProvider(TestRPC.provider());
+  @see https://github.com/ethereumjs/testrpc
 */
+
+//dapp should be watching for event rather than
 
 // may need to use npm install -g ethereumjs-testrpc
 // in dev https://github.com/ethereumjs/testrpc

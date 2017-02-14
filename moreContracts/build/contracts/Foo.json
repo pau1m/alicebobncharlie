@@ -1,0 +1,34 @@
+{
+  "contract_name": "Foo",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getNumber",
+      "outputs": [
+        {
+          "name": "number",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x60606040526002600055346000575b5b5b60708061001e6000396000f300606060405263ffffffff60e060020a600035041663f2c9ecd881146022575b6000565b34600057602c603e565b60408051918252519081900360200190f35b60005b905600a165627a7a72305820d2baae2849756d3796167ae0e07fca159767b0e8dfdc4fd83fb43110abf0bc100029",
+  "networks": {
+    "1487066090417": {
+      "events": {},
+      "links": {},
+      "address": "0xd55f28795b37a8898feffef1cd4fac837dc3a0c2",
+      "updated_at": 1487073683741
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1487073683741
+}

@@ -1,0 +1,83 @@
+{
+  "contract_name": "GetStr",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getTime",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x60606040526103e8600055346000575b6103e85b505b609b806100236000396000f300606060405263ffffffff60e060020a60003504166312065fe08114602c578063557ed1ba146048575b6000565b3460005760366064565b60408051918252519081900360200190f35b346000576036606a565b60408051918252519081900360200190f35b60005b90565b425b905600a165627a7a72305820cddd4bd1dfd36e61946df43f45b73e309ca332268ecfafedac6d92bc49cec4ce0029",
+  "networks": {
+    "1486987387748": {
+      "events": {},
+      "links": {},
+      "address": "0xceeddfad5846076e7f8e3c7a111539f4b46dd9d2",
+      "updated_at": 1486987583976
+    },
+    "1486987853514": {
+      "events": {},
+      "links": {},
+      "address": "0x6ff7f8701a3824719f70e5937f2bf3761587e0a3",
+      "updated_at": 1486989532803
+    },
+    "1486991269719": {
+      "events": {},
+      "links": {},
+      "address": "0xa098e403ae02b4eabaa49d4136500f463994931e",
+      "updated_at": 1486991284618
+    },
+    "1486996141909": {
+      "events": {},
+      "links": {},
+      "address": "0x8ee146183f94791164c4814d497fdbfb88fb6efd",
+      "updated_at": 1486998632273
+    },
+    "1486999471218": {
+      "events": {},
+      "links": {},
+      "address": "0x492cdb973addf75caff819cb19954e90b1cf7b8b",
+      "updated_at": 1486999812739
+    },
+    "1487001127026": {
+      "events": {},
+      "links": {},
+      "address": "0x7b306c75067c7fda6adcd70749e50bf8c1f66fac",
+      "updated_at": 1487001183154
+    },
+    "1487066090417": {
+      "events": {},
+      "links": {},
+      "address": "0xab64ccf101307d19717cc1e562b3a07c173f87b1",
+      "updated_at": 1487073683740
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1487073683740
+}

@@ -11,6 +11,7 @@
   "dependencies": {
     "ethereumjs-testrpc": "^3.0.3",
     "ipfs": "^0.21.8",
+    "my-package": "0.0.0",
     "underscore": "^1.8.3",
     "web3": "^0.18.2"
   }

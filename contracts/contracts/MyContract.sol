@@ -12,23 +12,26 @@ pragma solidity ^0.4.4;
 //but the sender creating a contract?
 
 contract MyContract {
-
+  // perhaps should have struct for each member.
   address public owner;
-//  address public member;
-//  mapping (address => uint) members;
+  address public member;
+  mapping (address => uint) members;
 
-  // + msg component?
   event LogDepositMade(address accountAddress, uint amount);
 
   function MyContract() {
     owner = msg.sender;
-  //  members = ?
+    //also need so set the members -- this can be passed
+    //at the point the contract is created.
   }
 
-  /*function splitFunds(uint divideBy, uint amount) returns (uint) {
-    return (amount / divideBy);
-    //maybe should be less so we can keep somestuff back for the contract to manage itself.
-  }*/
+//   function splitFunds(uint numMembers, uint amount) returns (uint) {
+//     // first subtract amount to manage this contracts
+//     // when killed is returned to creator
+//     // (n>3)n-2
+//     return (amount / numMembers);
+//     //maybe should be less so we can keep somestuff back for the contract to manage itself.
+//   }
 
   function deposit() payable {
         if (msg.value > 0) {

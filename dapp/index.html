@@ -3,6 +3,42 @@
     <script src="index.js"></script>
   </head>
   <body>
-    <h1 class="header header-title header-title-front">Hello world</h1>
+    <h1 class="header header-title header-title-front">BandPaid</h1>
+    <div data-role="bandMember"></div>
+      <form>
+        <fieldset>
+      <p>
+        <label>
+          <!-- see this for checksummming http://ethereum.stackexchange.com/questions/1374/how-can-i-check-if-an-ethereum-address-is-valid-->
+          <input type="text" pattern="^(0x)?[a-fA-F\d]{40}"> Owner
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type=text pattern="^(0x)?[a-fA-F\d]{40}">  Shared (multisig)
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type=text pattern="^(0x)?[a-fA-F\d]{40}"> Band Member
+        </label>
+        <button>add another</button>
+      </p>
+        <input type="submit">
+      </fieldset>
+      </form>
+
+      <h2>Bob n Alices shop</h2>
+      <form>
+        <fieldset>
+          <img src="http://placehold.it/350x150">
+          <p>
+            <label>
+              <input required type="text">Price you want to pay</input>
+            </label>
+          </p>
+        <input type="submit" value="Send now">
+        </fieldset>
+      </form>
   </body>
 </html>

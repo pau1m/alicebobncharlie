@@ -4,7 +4,7 @@ contract BandPaid {
 
   address public owner;
   mapping(address => uint) public members;
-  uint memberCount;
+  uint public memberCount;
   uint balance;
 
   function BandPaid() {
@@ -36,13 +36,12 @@ contract BandPaid {
     }
   }
 
-  function numMembers() constant returns (uint) {
+  function numMembers() constant returns (uint memberCount) {
     return memberCount;
   }
 
   function destroy() {
     if (msg.sender != owner) {
-      // kill the contract and send funds to creator.
       selfdestruct(owner);
     }
   }

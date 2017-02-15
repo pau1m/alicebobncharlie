@@ -5,51 +5,58 @@ const BandPaid = artifacts.require("./BandPaid.sol")
 //but if we don't know accounts in advance how?
 //is it possible to access that in
 
+//need help with asynchronous
+
 contract('BandPaid', function(accounts) {
-  it("should assert true", function() {
-    let bandPaid = BandPaid.deployed()
-    assert.isTrue(true)
+
+  it("Should add a member", function(){
+    return BandPaid.deployed().then(function(instance) {
+      return instance.addMember.call(accounts[1])
+    })
+    .then(function(result) {
+      assert.isTrue(result)
+    })
   })
 
-  it("Should add a member", function(done){
+  it("Should add a member", function(){
     return BandPaid.deployed().then(function(instance) {
       return instance.addMember.call(accounts[2])
     })
     .then(function(result) {
-      assert.isTrue(result)
-    })
-    .then(done())
-  })
-
-  it("Should add a member", function(done){
-    return BandPaid.deployed().then(function(instance) {
-      return instance.addMember.call(accounts[3])
-    })
-    .then(function(result) {
-      assert.isTrue(result)
-    })
-    .then(done())
-  })
-
-  it("Should add a member", function(done){
-    return BandPaid.deployed().then(function(instance) {
-      return instance.addMember.call(accounts[4])
-    })
-    .then(function(result) {
-      assert.isTrue(result)
-    })
-    .then(done())
-  })
-
-  it("It should have 1 member", function() {
-    return BandPaid.deployed().then(function(instance) {
-      return instance.numMembers.call()
-    })
-    .then(function(result) {
       console.log(result)
-      //assert.equal(1, result)
+      assert.isTrue(result)
     })
   })
+
+  it("Should add a member", function() {
+    setTimeout(function(){
+      return BandPaid.deployed().then(function(instance) {
+        return instance.addMember.call(accounts[3])
+      })
+      .then(function(result) {
+        assert.isTrue(result)
+      })
+    }, 1000)
+  })
+
+//is it querying state of original contract or after state chnage
+
+  it("It should have 3 members", function() {
+    setTimeout(function() {
+      return BandPaid.deployed().then(function(instance) {
+        return instance.numMembers.call()
+      })
+      .then(function(result) {
+        console.log(result.toNumber())
+        console.log(result.valueOf())
+        assert(true)
+        //assert.equal(1, result.toNumber())
+      })
+    }, 3000)
+  })
+
+
+
 
   //count members
 

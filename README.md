@@ -19,3 +19,8 @@ npm install -g http-server
 
 npm install -g truffle
 npm install -g ethereumjs-testrpc
+
+#
+
+```rpctest``` to launch test chain
+```truffle test``` in ```/contract``` to run demo.

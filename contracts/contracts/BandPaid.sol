@@ -12,6 +12,12 @@ contract BandPaid {
     memberCount = 0;
   }
 
+  event AddMsg(address indexed sender, bytes32 msg);
+
+  function getOwner() returns (address owner) {
+    return owner;
+  }
+
   function forwardPayment() payable returns (bool sent) {
     //iterate over each of the balances
   }
@@ -21,7 +27,9 @@ contract BandPaid {
       throw;
     } else {
       members[_member] = 1;
-      memberCount = memberCount + 1;
+      memberCount = (memberCount + 1);
+
+      AddMsg(msg.sender, "Short message");
       return true;
     }
   }
@@ -36,12 +44,13 @@ contract BandPaid {
     }
   }
 
-  function numMembers() constant returns (uint memberCount) {
+  function numMembers() constant returns (uint) {
+
     return memberCount;
   }
 
   function destroy() {
-    if (msg.sender != owner) {
+    if (msg.sender == owner) {
       selfdestruct(owner);
     }
   }

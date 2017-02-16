@@ -1,0 +1,135 @@
+{
+  "contract_name": "BandPaid",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "members",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_member",
+          "type": "address"
+        }
+      ],
+      "name": "removeMember",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "memberCount",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "numMembers",
+      "outputs": [
+        {
+          "name": "memberCount",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "destroy",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "forwardPayment",
+      "outputs": [
+        {
+          "name": "sent",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_member",
+          "type": "address"
+        }
+      ],
+      "name": "addMember",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b60008054600160a060020a03191633600160a060020a03161781556002555b5b6102ae806100396000396000f300606060405236156100725763ffffffff60e060020a60003504166308ae4b0c81146100775780630b1ca49a146100a257806311aee380146100cf5780634698d110146100ee57806383197ef01461010d5780638da5cb5b1461011c578063a27a79b614610145578063ca6d56dc14610161575b610000565b3461000057610090600160a060020a036004351661018e565b60408051918252519081900360200190f35b34610000576100bb600160a060020a03600435166101a0565b604080519115158252519081900360200190f35b34610000576100906101ec565b60408051918252519081900360200190f35b34610000576100906101f2565b60408051918252519081900360200190f35b346100005761011a6101f8565b005b346100005761012961021f565b60408051600160a060020a039092168252519081900360200190f35b6100bb6101f2565b604080519115158252519081900360200190f35b34610000576100bb600160a060020a0360043516610234565b604080519115158252519081900360200190f35b60016020526000908152604090205481565b6000805433600160a060020a039081169116146101bc57610000565b50600160a060020a0381166000908152600160208190526040822091909155600280546000190190555b5b919050565b60025481565b60005b90565b60005433600160a060020a0390811691161461021c57600054600160a060020a0316ff5b5b565b600054600160a060020a031681565b60005b90565b6000805433600160a060020a0390811691161461025057610000565b50600160a060020a038116600090815260016020819052604090912081905560028054820190556101e6565b5b9190505600a165627a7a723058206ae382f766c10b56a5b2e93ba90f45be377ace0d646cc5e4499e5a6dfa7acd990029",
+  "networks": {
+    "1487173479018": {
+      "events": {},
+      "links": {},
+      "address": "0xf6c621551b66e74ce2bc23d9d237b0144e3460cd",
+      "updated_at": 1487173892682
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1487173892682
+}

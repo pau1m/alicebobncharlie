@@ -30,8 +30,8 @@ contract('BandPaid', function(accounts) {
     })
   })
 
-  function hex_to_ascii(str1) {
-      let hex  = str1.toString()
+  function hex_to_ascii(hexdata) {
+      let hex  = hexdata.toString()
       let str = ''
       for (let n = 0; n < hex.length; n += 2) {
           str += String.fromCharCode(parseInt(hex.substr(n, 2), 16))

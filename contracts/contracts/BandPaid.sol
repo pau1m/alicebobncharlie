@@ -12,7 +12,8 @@ contract BandPaid {
     memberCount = 0;
   }
 
-  event AddMsg(address indexed sender, bytes32 msg);
+  event AddMember(address indexed sender, bytes32 msg);
+  event newPayment(address indexed sender, bytes32 msg);
 
   function getOwner() returns (address owner) {
     return owner;
@@ -45,7 +46,6 @@ contract BandPaid {
   }
 
   function numMembers() constant returns (uint) {
-
     return memberCount;
   }
 

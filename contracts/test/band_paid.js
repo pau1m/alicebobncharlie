@@ -15,7 +15,7 @@ contract('BandPaid', function(accounts) {
     bandPaid = instance
   })
 
-  it("Should add 2 members", function(){
+  it("Should add 3 members", function(){
     bandPaid.addMember(accounts[1])
     bandPaid.addMember(accounts[2])
     bandPaid.addMember(accounts[3])

@@ -41,8 +41,8 @@ contract BandPaid {
     // If the request comes from a band member.
     if (msg.sender == owner) {
       for (i;i<memberCount;i++) {
-        membersIndex[i].call.value(this.balance / 5).gas(50000);
-        balance = balance - (balance / 10);
+        membersIndex[i].call.value(3000000).gas(500000);
+
         NewWithdrawl(msg.sender, "Paid out");
       }
       //NewWithdrawl(msg.sender, "Paid out");

@@ -1,21 +1,25 @@
+//@todo focus asserts
 //@todo payout
 //@todo add watchers
 
 const BandPaid = artifacts.require("./BandPaid.sol")
 const Web3 = require('web3')
+const _ = require('underscore')
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+let web3 = new Web3.providers.HttpProvider("http://localhost:8545")
 
 contract('BandPaid', function(accounts) {
   //set up instance for all tests
-var bandPaid, contractAddress
-
-BandPaid.new({ from: accounts[0]  })
+var bandPaid/*, contractAddress*/
+//
+// BandPaid.new({ from: accounts[0], to: this.address, value: web3.toWei(5, "ether")  })
 
   it("Should create a new contract", function(done){
+    // should instaniate with a value here
     BandPaid.new({ from: accounts[0] })
     .then(function(result){
-      contractAddress = result.address
+      // get the logs
+      // contractAddress = result.address
       assert.isOk(result)
       console.log(web3.eth.getBalance(accounts[0]))
       done()
@@ -32,29 +36,36 @@ BandPaid.new({ from: accounts[0]  })
 
   it("Should be owned by the creator", function(done){
     bandPaid.getOwner.call()
-    .then(function(result){
-      assert.equal(result, accounts[0])
+    .then(function(tx){
+      let logs = tx.logs
+
+      console.dir(logs)
+
+      //assert.equal(result, accounts[0])
       done()
     })
   })
 
   it("Should add a band member", function(done) {
-    bandPaid.addMember(accounts[1]).then(function(txr){
-      // console.log(txr)
+    bandPaid.addMember(accounts[1])
+    .then(function(txr){
+     console.log(txr)
       assert(true)
       done()
     })
   })
 
   it("Should add a band member", function(done) {
-    bandPaid.addMember(accounts[2]).then(function(txr) {
+    bandPaid.addMember(accounts[2])
+    .then(function(txr) {
       assert(true)
       done()
     })
   })
 
   it("Should add a band member", function(done) {
-      bandPaid.addMember(accounts[3]).then(function(txr) {
+      bandPaid.addMember(accounts[3])
+      .then(function(txr) {
       assert(true)
       done()
     })
@@ -68,8 +79,8 @@ BandPaid.new({ from: accounts[0]  })
     })
   })
 
-  it("Should deposit 50 ether", function(done){
-    bandPaid.deposit({from:accounts[0], to:bandPaid.address, value: web3.toWei(50, "ether")})/*.call*/
+  it("Should deposit 5 ether", function(done){
+    bandPaid.deposit({from:accounts[0], to:bandPaid.address, value: web3.toWei(5, "ether")})
     .then(function(tx) {
       assert.isOk(tx.receipt)
       done()
@@ -81,15 +92,16 @@ BandPaid.new({ from: accounts[0]  })
   })
 
   it("Should pay artists", function(done) {
-    bandPaid.payBand()
+    bandPaid.payBand.call()
     .then(function(result) {
       // Hmmmmmm, doesn't seem to be paying out?
-      console.log(result)
-      console.log(accounts)
+      // console.log(result)
+      // console.log(accounts)
+      //debug with web3 getting transaction from receipt
       console.log(web3.eth.getBalance(accounts[0]))
       console.log(web3.eth.getBalance(accounts[1]))
-      console.log(web3.eth.getBalance(accounts[2]))
-      console.log(web3.eth.getBalance(accounts[3]))
+      // console.log(web3.eth.getBalance(accounts[2]))
+      // console.log(web3.eth.getBalance(accounts[3]))
 
       assert.equal(true, true)
       done()
@@ -100,7 +112,7 @@ BandPaid.new({ from: accounts[0]  })
       bandPaid.destroy()
       .then(function(tx){
         // To ascii and clean padding
-        let msg = hexToAscii(tx.receipt.logs[0].data).replace(/\u0000/g, '') ;
+        let msg = hexToAscii(tx.receipt.logs[0].data).replace(/\u0000/g, '');
         assert.equal(msg, 'Bye Bye!')
         done()
       })

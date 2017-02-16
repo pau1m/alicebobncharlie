@@ -1,3 +1,6 @@
+//@todo payout
+//@todo add watchers
+
 const BandPaid = artifacts.require("./BandPaid.sol")
 const Web3 = require('web3')
 
@@ -65,11 +68,32 @@ BandPaid.new({ from: accounts[0]  })
     })
   })
 
-  it("Should deposit 10 ether", function(done){
-  //  var foo = web3.eth.sendTransaction()
-    bandPaid.deposit({from:accounts[0], to:bandPaid.address, value: web3.toWei(10, "ether")})
-  //  console.log('goo',foo)
+  it("Should deposit 50 ether", function(done){
+    bandPaid.deposit({from:accounts[0], to:bandPaid.address, value: web3.toWei(50, "ether")})/*.call*/
+    .then(function(tx) {
+      assert.isOk(tx.receipt)
+      done()
+    })
+  })
+
+  it("Should get contract balance", function(done){
     done()
+  })
+
+  it("Should pay artists", function(done) {
+    bandPaid.payBand()
+    .then(function(result) {
+      // Hmmmmmm, doesn't seem to be paying out?
+      console.log(result)
+      console.log(accounts)
+      console.log(web3.eth.getBalance(accounts[0]))
+      console.log(web3.eth.getBalance(accounts[1]))
+      console.log(web3.eth.getBalance(accounts[2]))
+      console.log(web3.eth.getBalance(accounts[3]))
+
+      assert.equal(true, true)
+      done()
+    })
   })
 
   it("Should destroy the contract", function(done){

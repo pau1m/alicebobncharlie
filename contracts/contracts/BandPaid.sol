@@ -36,19 +36,24 @@ contract BandPaid {
     //fwd balance to payee
   }
 
-  function payBand() returns (bool bandIsPaid){
+  function payBand() returns (bool) {
+    int8 i=0;
     // If the request comes from a band member.
-    if (members[msg.sender] >= 0) {
-      // send ether to thels
-      NewWithdrawl(msg.sender, "Paid out");
-
+    if (msg.sender == owner) {
+      for (i;i<memberCount;i++) {
+        membersIndex[i].call.value(this.balance / 5).gas(50000);
+        balance = balance - (balance / 10);
+        NewWithdrawl(msg.sender, "Paid out");
+      }
+      //NewWithdrawl(msg.sender, "Paid out");
       return true;
     } else {
-      throw; //either no balance or sender is not
+      return false;
+      /*throw; //either no balance or sender is not*/
     }
   }
   //could use address[] internal members;
-  function withdraw(address addr) payable returns (bool) {
+  /*function withdraw(address addr) payable returns (bool) {
     // If account exists and can payout
     if (members[msg.sender] >= 0) {
 
@@ -65,7 +70,7 @@ contract BandPaid {
     } else {
       throw; //either no balance or sender is not
     }
-  }
+  }*/
 
   function getMemberAtIndex(int8 i) constant returns (address) {
     return membersIndex[i];

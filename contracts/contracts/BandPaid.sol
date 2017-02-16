@@ -13,31 +13,46 @@ contract BandPaid {
   }
 
   event AddMember(address indexed sender, bytes32 msg);
-  event newPayment(address indexed sender, bytes32 msg);
+  event NewPayment(address indexed sender, bytes32 msg);
+  event NewWithdrawl(address indexed sender, bytes32 msg);
+  event ContractDestroyed(bytes32 msg);
 
-  function getOwner() returns (address owner) {
+  function getOwner() returns (address) {
     return owner;
   }
 
-  function forwardPayment() payable returns (bool sent) {
-    //iterate over each of the balances
+  function forwardPayment(address payee) payable returns (bool sent) {
+    //fwd balance to payee
   }
 
-  function addMember(address _member) returns (bool){
+  function withdraw() payable returns (bool) {
+    // If account exists and can payout
+    if (members[msg.sender] >= 0) {
+      // send ether to thels
+
+
+      NewWithdrawl(msg.sender, "Paid out");
+      return true;
+    } else {
+      throw; //either no balance or sender is not
+    }
+  }
+
+  function addMember(address _member) returns (bool) {
     if (msg.sender != owner) {
       throw;
     } else {
-      members[_member] = 1;
+      members[_member] = 0;
       memberCount = (memberCount + 1);
 
-      AddMsg(msg.sender, "Short message");
+      AddMember(msg.sender, "Added band member");
       return true;
     }
   }
 
   function removeMember(address _member) returns (bool) {
-    if (msg.sender != owner) { //@todo create modifier for DRYness
-      throw; // whats the difference for sender between throw and empty return
+    if (msg.sender != owner) { //@todo create modifier for owner
+      throw;
     } else {
       members[_member] = 0;
       memberCount = memberCount - 1;
@@ -51,6 +66,7 @@ contract BandPaid {
 
   function destroy() {
     if (msg.sender == owner) {
+      ContractDestroyed("Bye Bye!");
       selfdestruct(owner);
     }
   }

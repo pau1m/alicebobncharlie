@@ -1,5 +1,16 @@
 pragma solidity ^0.4.4;
 
+// nabbed from https://www.ethereum.org/crowdsale
+/* The function without name is the default function that is called whenever anyone sends funds to a contract */
+/*function () payable {
+    if (crowdsaleClosed) throw;
+    uint amount = msg.value;
+    balanceOf[msg.sender] = amount;
+    amountRaised += amount;
+    tokenReward.transfer(msg.sender, amount / price);
+    FundTransfer(msg.sender, amount, true);
+}*/
+
 contract BandPaid {
 
   address public owner;

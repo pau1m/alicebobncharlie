@@ -1,5 +1,4 @@
 //@todo focus asserts
-//@todo payout
 //@todo add watchers
 
 const BandPaid = artifacts.require("./BandPaid.sol")
@@ -8,13 +7,11 @@ const _ = require('underscore')
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
 
-
 contract('BandPaid', function(accounts) {
   //set up instance for all tests
 var bandPaid
 
   it("Should create a new contract", function(done){
-    // should instaniate with a value here
     BandPaid.new({ from: accounts[0] })
     .then(function(result){
       assert.isOk(result)
@@ -73,6 +70,7 @@ var bandPaid
   it("Should deposit 10 ether", function(done) {
     bandPaid.deposit({from:accounts[0], to:bandPaid.address, value: web3.toWei(10, "ether")})
     .then(function(tx) {
+      //add a check for value in actual account
       assert.equal(tx.logs[0].args.sender, accounts[0])
       assert.isOk(tx.receipt)
       done()
@@ -110,6 +108,7 @@ var bandPaid
       bandPaid.destroy()
       .then(function(tx){
         // To ascii and clean padding
+        //@todo can use web3.eth.hexToAscii instead
         let msg = hexToAscii(tx.receipt.logs[0].data).replace(/\u0000/g, '');
         assert.equal(msg, 'Bye Bye!')
         done()
@@ -127,5 +126,3 @@ var bandPaid
       return str
    }
 })
-
-// Build out our tests here.

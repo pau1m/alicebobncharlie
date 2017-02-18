@@ -1,5 +1,8 @@
 pragma solidity ^0.4.4;
 //@todo getters and setters and reducing memory footprint
+//@todo weighting and percentage pay out
+//@todo set minimum for contract reserver (band war chest)
+
 contract BandPaid {
 
   struct BandMember {
@@ -17,7 +20,6 @@ contract BandPaid {
   address public owner;
   mapping (int8 => address) public membersIndex;
   int8 public memberCount;
-  //uint balance;
 
   function BandPaid() {
     owner = msg.sender;

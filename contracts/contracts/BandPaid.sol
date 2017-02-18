@@ -1,5 +1,10 @@
 pragma solidity ^0.4.4;
 
+// create cron --- why not run actual applications on the test net for real
+//could we use .bit or on eof the cooins ???
+// add a struct
+
+
 // nabbed from https://www.ethereum.org/crowdsale
 /* The function without name is the default function that is called whenever anyone sends funds to a contract */
 /*function () payable {
@@ -10,8 +15,25 @@ pragma solidity ^0.4.4;
     tokenReward.transfer(msg.sender, amount / price);
     FundTransfer(msg.sender, amount, true);
 }*/
+// chanllenges in writing solidity
+// in banking should we keep a separate amount
+// hash the amount
+//idea for a blog post
 
+
+
+//We're not going to worry about gas;
 contract BandPaid {
+
+  /*
+  stuct BandMember {
+    byte32 name;
+    address addr;
+    int8 weight;
+    bool: status;
+    uint: maxWithdrawal;
+  }http://ethereum.stackexchange.com/questions/1511/how-to-initialize-a-struct**/
+  //bandMembers[] BandMember;
 
   address public owner;
   mapping (int8 => address) public membersIndex;
@@ -19,15 +41,42 @@ contract BandPaid {
   int8 public memberCount;
   uint balance;
 
-  function BandPaid() {
+  function BandPaid(/*aMemberObj*/) {
     owner = msg.sender;
     memberCount = 0;
+
+    /*********/
+
+
+    /*if (index = bandMembers[].push()) {
+      return index;
+    } else {
+      throw;
+    }*/
+
+
+    /**********/
   }
 
   event AddMember(address indexed sender, bytes32 msg);
   event NewPayment(address indexed sender, bytes32 msg);
   event NewWithdrawl(address indexed sender, bytes32 msg);
   event ContractDestroyed(bytes32 msg);
+
+//*********
+//@todo?
+/*function getBandMember() returns BandMember {}
+function getBandMemberAccounts() returns (address) {}
+function addBandMember() returns (bool) {}
+function removeBandMember() returns (bool) {}
+function setBandMemberStatus returns (bool) {}*/
+
+//*********/
+
+/*modifier isOwer() { // Modifier
+    if (msg.sender != owner) throw;
+    _;
+}*/
 
   function getOwner() returns (address) {
     return owner;
@@ -47,14 +96,18 @@ contract BandPaid {
     //fwd balance to payee
   }
 
-  function payBand() returns (bool) {
+  function payBand() payable /*isOwner*/ returns (bool) {
+
     int8 i=0;
     // If the request comes from a band member.
     if (msg.sender == owner) {
       for (i;i<memberCount;i++) {
-        membersIndex[i].call.value(3000000).gas(500000);
-
-        NewWithdrawl(msg.sender, "Paid out");
+        /*membersIndex[i].call.value(3000000).gas(500000);*/
+        address payee = membersIndex[i];
+        if (payee.send(2 ether)) {
+          NewWithdrawl(payee, "Paid out");
+        }
+          NewWithdrawl(payee, "Failed");
       }
       //NewWithdrawl(msg.sender, "Paid out");
       return true;
@@ -126,8 +179,8 @@ contract BandPaid {
 
   function destroy() {
     if (msg.sender == owner) {
-      ContractDestroyed("Bye Bye!");
-      selfdestruct(owner);
+        ContractDestroyed("Bye Bye!");
+        selfdestruct(owner);
     }
   }
 }

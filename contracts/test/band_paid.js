@@ -11,18 +11,13 @@ let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
 
 contract('BandPaid', function(accounts) {
   //set up instance for all tests
-var bandPaid/*, contractAddress*/
-//
-// BandPaid.new({ from: accounts[0], to: this.address, value: web3.toWei(5, "ether")  })
+var bandPaid
 
   it("Should create a new contract", function(done){
     // should instaniate with a value here
     BandPaid.new({ from: accounts[0] })
     .then(function(result){
-      // get the logs
-      // contractAddress = result.address
       assert.isOk(result)
-    //  console.log(web3.eth.getBalance(accounts[0]))
       done()
     })
   })
@@ -31,8 +26,6 @@ var bandPaid/*, contractAddress*/
     BandPaid.deployed().then(function(instance) {
       bandPaid = instance
       assert.isOk(bandPaid)
-      //console.log('bp: ', bandPaid)
-    //  assert(true)
       done()
     })
   })
@@ -77,31 +70,38 @@ var bandPaid/*, contractAddress*/
     })
   })
 
-//send money with geth???
-//@aha probably can't deposit in this way
   it("Should deposit 10 ether", function(done) {
     bandPaid.deposit({from:accounts[0], to:bandPaid.address, value: web3.toWei(10, "ether")})
     .then(function(tx) {
       assert.equal(tx.logs[0].args.sender, accounts[0])
       assert.isOk(tx.receipt)
       done()
-    })
+    }, function(error) {
+        assert.equal(true, false)
+        console.dir(error)
+        done()
+      })
   })
 
-  it("Should get contract balance", function(done){
-    done()
-  })
+  // it("Should get contract balance", function(done) {
+  //   bandPaid.getContractBalance.call()
+  //   .then(function(cb){
+  //     console.log(cb)
+  //     assert.equal(cb.toValue == web3.toWei(10, "ether"))
+  //   })
+  //   done()
+  // })
 
   it("Should pay artists", function(done) {
     bandPaid.payBand()
     .then(function(tx) {
-      // console.log(tx)
+      // console.log(tx.receipt.transactionHash)
       // console.log(web3.eth.getBalance(bandPaid.address))
       // console.log(web3.eth.getBalance(accounts[0]))
       // console.log(web3.eth.getBalance(accounts[1]))
       // console.log(web3.eth.getBalance(accounts[2]))
       // console.log(web3.eth.getBalance(accounts[3]))
-      assert.isDefined(tx.receipt.transactionHash,  "Got transaction for payout.")
+      assert.isDefined(tx.receipt.transactionHash)
       done()
     })
   })

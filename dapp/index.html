@@ -10,7 +10,10 @@
       }
       var coinbase = web3.eth.coinbase
       web3.eth.defaultAccount = coinbase
+
+      // Initialise a contract
       var originalBalance = web3.eth.getBalance(coinbase).toNumber();
+      var BandContract
 
       </script>
       <script id="contractRaw" type="text/example">pragma solidity ^0.4.4;
@@ -118,49 +121,66 @@
 
     <!-- var source =  -->
     <script>
+    // set globals
+    var contractSource = document.getElementById("contractRaw").innerText
+    var compiledObj = web3.eth.compile.solidity(contractSource)
+    var compiled = compiledObj['BandPaid']
+
+    var abi = compiled.interface
+    var bytecode = compiled.bytecode
+    var MyContract = web3.eth.contract(JSON.parse(abi))
+    var gasEstimate = web3.eth.estimateGas(MyContract)
+
     function createNewBandContract() {
-     var contractSource = document.getElementById("contractRaw").innerText
-     var compiledObj = web3.eth.compile.solidity(contractSource)
-     var compiled
 
-     if (compiledObj.hasOwnProperty("<stdin>:BandPaid")) {
-      //  compiled = compiledObj['<stdin>:BandPaid']
-      //  var code = compiled.code
-      //  var abi = compiled.info.abiDefinition
-
-      //  web3.eth.contract(abi).new({data: code}, function (err, contract) {
-      //    if(err) {
-      //      console.error(err);
-      //      return;
-      //          // callback fires twice, we only want the second call when the contract is deployed
-      //          } else if(contract.address) {
-      //            console.log(contract.address)
-      //          }
-      //  })
-     } else {
-       compiled = compiledObj['BandPaid']
-      //  console.log('hw')
-      //  console.log(compiled)
-       var abi = compiled.interface
-       var bytecode = compiled.bytecode
-       var MyContract = web3.eth.contract(JSON.parse(abi))
-       var gasEstimate = web3.eth.estimateGas(MyContract)
-       console.log(MyContract)
-       MyContract.new({data: bytecode}, function (err, contract) {
-        // web3.eth.contract(JSON.parse(abi)).new({data: bytecode}, function (err, contract) {
-          if(err) {
-            console.error(err);
-            return;
-                } else if(contract.address) {
-                  document.getElementById("contractAddress").value = contract.address
-                  console.log(contract.address)
-                }
-        })
-
-      console.log('gas: ', gasEstimate)
-     }
+      BandContract = MyContract.new({data: bytecode}, function (err, contract) {
+        if(err) {
+          console.error(err);
+          return;
+        } else if(contract.address) {
+          document.getElementById("contractAddress").value = contract.address
+          var contractAddress = contract.address
+          // do a call and get list of band members
+        }
+      })
    }
-    </script>
+  </script>
+
+  <script>
+
+    // function getExistingContract() {
+    //
+    //   return web3.eth.contract(JSON.parse(abi))
+    // }
+  // Fetch existing contract
+
+  </script>
+
+  <script>
+    // get list of bandmembers
+    //
+  </script>
+
+<script>
+  //from here we should be using the contract ID so we don't have to keep deploying
+  function addNewBandMember() {
+
+    let existingContractAddress = document.getElementById("contractAddress").value
+    let newBandMemberAddress = document.getElementById("accountToAdd").value
+    BandContract = web3.eth.contract(JSON.parse(abi)).at(existingContractAddress)
+
+    //let accountToAdd = document.getElementById("accountToAdd").value
+    //BandContract = getExistingContract() //set BandConract
+    console.log(BandContract.addMember(web3.eth.accounts[1]))
+    console.log(BandContract.numMembers.call().toNumber(), ' band members')
+    //mmmmm .then is not a function, mmmmm, how to deal with asychronicity
+    // .then(function(tx){
+    //   console.log('newMember tx: ', console.log(tx))
+    // }, function(error){
+    //   console.log('oopsy', error)
+    // })
+  }
+</script>
 
 
   </head>
@@ -174,12 +194,18 @@
           </label>
         </p>
         <p>
-          <button type="submit" onClick="createNewBandContract()">Create new band contract</button>
+          <button onClick="createNewBandContract()">Create new band contract</button>
         </p>
         <p>
           <label>
-            <input id="contractAddress" disabled="disabled" type="text" size="50" pattern="^(0x)?[a-fA-F\d]{40}"> Contract Address
+            <input id="contractAddress" type="text" size="50" pattern="^(0x)?[a-fA-F\d]{40}"> Contract Address
           </label>
+        </p>
+        <p>
+          <label>
+            <input id="accountToAdd" size="50" type="text" pattern="^(0x)?[a-fA-F\d]{40}">
+          </label>
+          <button onClick="addNewBandMember()">Add band member</button>
         </p>
       </fieldset>
     </form>

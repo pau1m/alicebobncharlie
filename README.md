@@ -5,6 +5,8 @@
 #local chain and watcher
 * brew tap ethereum/ethereum
 * brew install ethereum
+* brew install solidity
+* (maybe also need) brew linkapps solidity
 * geth --fast --cache=2048 --jitvm
 * geth --rpc
 
@@ -19,8 +21,10 @@ npm install -g http-server
 
 * npm install -g truffle
 * npm install -g ethereumjs-testrpc
-
+* npm install -g solc
 #
 
 ```rpctest``` to launch test chain
 ```truffle test``` in ```/contract``` to run demo.
+
+

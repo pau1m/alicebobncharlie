@@ -1,26 +1,205 @@
 <html>
   <head>
-    <script src="index.js"></script>
+    <script src="js/web3/dist/web3.js"></script>
+    <script>
+      if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider)
+      } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+      }
+      var coinbase = web3.eth.coinbase
+      web3.eth.defaultAccount = coinbase
+      var originalBalance = web3.eth.getBalance(coinbase).toNumber();
+
+      </script>
+      <script id="contractRaw" type="text/example">pragma solidity ^0.4.4;
+
+        contract BandPaid {
+
+          struct BandMember {
+            string name;
+            string link;
+            address addr;
+            int8 weight;
+            bool status;
+            uint maxWithdrawal;
+            uint balance;
+          }
+
+          mapping(address => BandMember) public members;
+          address public owner;
+          mapping (int8 => address) public membersIndex;
+          int8 public memberCount;
+
+          function BandPaid() {
+            owner = msg.sender;
+            memberCount = 0;
+          }
+
+          event AddMember(address indexed sender, bytes32 msg);
+          event NewPayment(address indexed sender, bytes32 msg);
+          event NewWithdrawl(address indexed sender, bytes32 msg);
+          event ContractDestroyed(bytes32 msg);
+
+          function getOwner() returns (address) {
+            return owner;
+          }
+
+          modifier isOwner() {
+              if (msg.sender != owner) throw;
+              _;
+          }
+
+          modifier isBandMember() {
+            if (members[msg.sender].status != true) throw;
+            _;
+          }
+
+          function deposit() payable returns (bool) {
+            if (msg.value == 0) throw;
+              NewPayment(msg.sender, "Sold a track");
+              return true;
+          }
+
+          function forwardPayment(address payee) payable returns (bool sent) {
+          }
+
+          function payBand() payable isOwner returns (bool) {
+
+              for (int8 i=0;i<memberCount;i++) {
+                address payee = membersIndex[i];
+                if (payee.send(2 ether)) {
+                  NewWithdrawl(payee, "Paid out");
+                }
+                  NewWithdrawl(payee, "Failed");
+              }
+          }
+
+          function getMemberAtIndex(int8 i) constant returns (address) {
+            return membersIndex[i];
+          }
+
+          function getMemberBalance(address _member) constant returns (uint) {
+            return members[_member].balance;
+          }
+
+          function getContractBalance() returns (uint) {
+            return this.balance;
+          }
+
+          function addMember(address _member) isOwner returns (bool) {
+
+              members[_member].status = true;
+              membersIndex[memberCount] = _member;
+              memberCount++;
+
+              AddMember(msg.sender, "Added band member");
+              return true;
+          }
+
+          function removeMember(address _member) isOwner returns (bool removed) {
+              members[_member].status = false;
+          }
+
+          function numMembers() constant returns (int8) {
+            return memberCount;
+          }
+
+          function destroy() {
+            if (msg.sender == owner) {
+                ContractDestroyed("Bye Bye!");
+                selfdestruct(owner);
+            }
+          }
+        }
+      </script>
+
+
+    <!-- var source =  -->
+    <script>
+    function createNewBandContract() {
+     var contractSource = document.getElementById("contractRaw").innerText
+     var compiledObj = web3.eth.compile.solidity(contractSource)
+     var compiled
+
+     if (compiledObj.hasOwnProperty("<stdin>:BandPaid")) {
+      //  compiled = compiledObj['<stdin>:BandPaid']
+      //  var code = compiled.code
+      //  var abi = compiled.info.abiDefinition
+
+      //  web3.eth.contract(abi).new({data: code}, function (err, contract) {
+      //    if(err) {
+      //      console.error(err);
+      //      return;
+      //          // callback fires twice, we only want the second call when the contract is deployed
+      //          } else if(contract.address) {
+      //            console.log(contract.address)
+      //          }
+      //  })
+     } else {
+       compiled = compiledObj['BandPaid']
+      //  console.log('hw')
+      //  console.log(compiled)
+       var abi = compiled.interface
+       var bytecode = compiled.bytecode
+       var MyContract = web3.eth.contract(JSON.parse(abi))
+       var gasEstimate = web3.eth.estimateGas(MyContract)
+       console.log(MyContract)
+       MyContract.new({data: bytecode}, function (err, contract) {
+        // web3.eth.contract(JSON.parse(abi)).new({data: bytecode}, function (err, contract) {
+          if(err) {
+            console.error(err);
+            return;
+                } else if(contract.address) {
+                  document.getElementById("contractAddress").value = contract.address
+                  console.log(contract.address)
+                }
+        })
+
+      console.log('gas: ', gasEstimate)
+     }
+   }
+    </script>
+
+
   </head>
   <body>
     <h1 class="header header-title header-title-front">BandPaid</h1>
-    <div data-role="bandMember"></div>
+    <form>
+      <fieldset>
+        <p>
+          <label>
+            <input id="coinbase" disabled="disabled" type="text" size="50" pattern="^(0x)?[a-fA-F\d]{40}"> Your Account
+          </label>
+        </p>
+        <p>
+          <button type="submit" onClick="createNewBandContract()">Create new band contract</button>
+        </p>
+        <p>
+          <label>
+            <input id="contractAddress" disabled="disabled" type="text" size="50" pattern="^(0x)?[a-fA-F\d]{40}"> Contract Address
+          </label>
+        </p>
+      </fieldset>
+    </form>
+
       <form>
         <fieldset>
       <p>
         <label>
           <!-- see this for checksummming http://ethereum.stackexchange.com/questions/1374/how-can-i-check-if-an-ethereum-address-is-valid-->
-          <input type="text" pattern="^(0x)?[a-fA-F\d]{40}"> Owner
+          <input id="coinbase" disabled="disabled" type="text" size="50" pattern="^(0x)?[a-fA-F\d]{40}"> Your Account
         </label>
       </p>
-      <p>
+      <!-- <p>
         <label>
-          <input type=text pattern="^(0x)?[a-fA-F\d]{40}">  Shared (multisig)
+          <input size="50" type=text pattern="^(0x)?[a-fA-F\d]{40}">  Shared (multisig)
         </label>
-      </p>
+      </p> -->
       <p>
         <label>
-          <input type=text pattern="^(0x)?[a-fA-F\d]{40}"> Band Member
+          <input size="50" type="text" pattern="^(0x)?[a-fA-F\d]{40}"> Band Member
         </label>
         <button>add another</button>
       </p>
@@ -40,5 +219,13 @@
         <input type="submit" value="Send now">
         </fieldset>
       </form>
+      <script>
+        document.getElementById("coinbase").value = coinbase
+
+        //on click create a new contract
+        //how do we handle that in the dapp
+
+
+      </script>
   </body>
 </html>

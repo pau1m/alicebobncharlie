@@ -75,6 +75,7 @@ var bandPaid
       assert.isOk(tx.receipt)
       done()
     }, function(error) {
+        //@todo asset error
         assert.equal(true, false)
         console.dir(error)
         done()

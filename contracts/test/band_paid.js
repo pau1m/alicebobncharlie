@@ -1,6 +1,5 @@
 //@todo focus asserts
 //@todo add watchers
-
 const BandPaid = artifacts.require("./BandPaid.sol")
 const Web3 = require('web3')
 const _ = require('underscore')

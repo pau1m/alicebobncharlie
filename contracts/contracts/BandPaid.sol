@@ -9,7 +9,6 @@ contract BandPaid {
     //@todo change to bytes32
     string name;
     string link;
-    address addr;
     int8 weight;
     bool status;
     uint maxWithdrawal;
@@ -53,6 +52,10 @@ contract BandPaid {
 
   function forwardPayment(address payee) payable returns (bool sent) {
     //fwd balance to payee
+  }
+
+  function () payable {
+    return;
   }
 
   function payBand() payable isOwner returns (bool) {

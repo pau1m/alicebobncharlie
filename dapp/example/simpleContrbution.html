@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <script src="./web3.min.js"></script>
+    <script>
+    var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+
+    function send() {
+      web3.eth.sendTransaction({
+        //  from: web3.eth.coinbase,
+          to: '0x64F110068fB03146E3F42a87cc7d6a4BDd39CD9c',
+          value: web3.toWei(document.getElementById("amount").value, 'ether')
+        }, function(result){
+        if (err, address) {
+          console.log('result :', address)
+        }
+      })
+    }
+    </script>
+  </head>
+  <body>
+  <fieldset>
+    <label>
+      <input type="text" id="amount">
+      </input>
+    </label>
+    <button onclick="send()">Donate to the Author</button>
+    <div class="response" id="response"></div>
+  </fieldset>
+  </body>
+</html>

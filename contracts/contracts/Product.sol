@@ -41,7 +41,7 @@ contract Product {
 
   function deposit() payable {
     if (owner.send(msg.value)) {
-      NewPayment(msg.sender, "Fire event.");
+      NewPayment(msg.sender, "Sale: OxOOOOOOOOOOOOOO");
     } else {
       throw;
     }

@@ -8,7 +8,7 @@ contract('Product', function(accounts) {
   var product
 
   it("Should create a new contract", function(done){
-    Product.new([accounts[1], accounts[2], accounts[3]])
+    Product.new()
     .then(function(result){
       console.log(result)
       assert.isOk(result)
@@ -25,21 +25,27 @@ contract('Product', function(accounts) {
   })
 
   it("Should deposit 10 ether", function(done) {
-    product.send({from:accounts[0], to:product.address, value: web3.toWei(10, "ether")})
+    // get value of first account
+    // then make comparison of second account.
+    product.deposit({from:accounts[1], to:product.address, value: web3.toWei(10, "ether")})
     .then(function(tx) {
-      console.log('tx: ', tx)
-      //add a check for value in actual account
       assert.equal(tx.logs[0].args.sender, accounts[0])
+      // how do we assert actual amount -- retrieve from reciept
       assert.isOk(tx.receipt)
       done()
     }, function(error) {
         console.dir(error)
-        // assert.equal(true, false)
-
+        assert.equal(true, false)
         done()
       })
   })
 
+  // Should receive ten ether
+
+
+
+
+//@todo watch for events
 
 // Deploy a new contract with a list of members.
 

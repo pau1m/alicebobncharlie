@@ -2,46 +2,57 @@ pragma solidity ^0.4.4;
 
 // Phase 1.
 // Simple constructor
+// Emmitting messages / Events
+// Discuss scoping
+// payable keyword
+// core properties available eg msg.sender, msg.value
+
+// Phase 2.
+// Constructor passing values
 // Passing arguments
-// Emmitting messages
+// modifiers
+// getter and setters
+// incorporating web3 for testing
+
+
+//phaseX / notes
+//throw
+//should we deal with events in first or second part
+//use of return values in payment
+//@todo contract front end a button
+//web3 bundled and minified
+//use testnet to deploy cutting and pasting
+//Add app via ipfs
 
 contract Product {
 
-  /*struct recipient {
-    int8 weight;
-    address addr;
-  }*/
-
-  address[] public recipients;
+  // The payee and manager of the contract
   address public owner;
 
+  // Define a new event we can emit in a function.
   event NewPayment(address indexed sender, bytes32 msg);
 
-  // storage ??
-  function Product(address[] _recipients/*, int[] weights*/) {
-    owner = msg.sender;
-    recipients = _recipients;
-  }
+  // Constructor.
+  function Product() {
 
-  function getPayeeList() returns (address[]) {
-    return recipients;
+    // Assign the contract creator as owner of the contract
+    owner = msg.sender;
   }
 
   function deposit() payable {
-    NewPayment(msg.sender, "someone bought our stuff 1");
-    // recieve amount
+    if (owner.send(msg.value)) {
+      NewPayment(msg.sender, "Fire event.");
+    } else {
+      throw;
+    }
   }
-  // Auto-payout
+
   function() payable {
-
-    // Check for payout
-    NewPayment(msg.sender, "someone bought our stuff 2");
-
-
-
-    //iterate and pay everybody --- do we have a .length
-    //divide by number of members
-
-    // fire event
+    if (owner.send(msg.value)) {
+      NewPayment(msg.sender, "Ooh, where did that come from.");
+    } else {
+      throw;
+    }
   }
+
 }
